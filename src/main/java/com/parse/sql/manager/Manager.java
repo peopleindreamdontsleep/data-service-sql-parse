@@ -4,6 +4,9 @@ import com.parse.sql.repository.SQLCondition;
 
 import java.util.List;
 
+/**
+ * 弃用，直接基于druid进行改造，不需要单独实现
+ */
 public interface Manager {
 
     String getSuggest(Object cons);

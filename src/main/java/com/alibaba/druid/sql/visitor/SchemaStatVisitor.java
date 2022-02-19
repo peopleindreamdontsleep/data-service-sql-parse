@@ -15,14 +15,7 @@
  */
 package com.alibaba.druid.sql.visitor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.*;
@@ -44,6 +37,7 @@ import com.alibaba.druid.stat.TableStat.Mode;
 import com.alibaba.druid.stat.TableStat.Relationship;
 import com.alibaba.druid.util.FnvHash;
 import com.alibaba.druid.util.JdbcConstants;
+import com.parse.sql.SQLParseServer;
 import com.parse.sql.common.Constants;
 import com.parse.sql.repository.SQLCondition;
 
@@ -52,8 +46,11 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
 
     protected SchemaRepository repository;
 
-    public boolean has_cast = false;
+    public boolean has_cast = false;//666
     public boolean has_like = false;
+    public boolean has_or = false; //603
+    public boolean has_fun = false; //1794
+    public boolean has_not = false; //666
 
     protected final HashMap<TableStat.Name, TableStat> tableStats     = new LinkedHashMap<TableStat.Name, TableStat>();
     protected final Map<Long, Column>                  columns        = new LinkedHashMap<Long, Column>();
@@ -599,6 +596,8 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
                 handleRelationship(left, x.getOperator().name, right);
                 break;
             case BooleanOr: {
+
+                has_or = true;
                 List<SQLExpr> list = SQLBinaryOpExpr.split(x, op);
 
                 for (SQLExpr item : list) {
@@ -650,6 +649,10 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
     }
 
     protected void handleCondition(SQLExpr expr, String operator, SQLExpr... valueExprs) {
+
+        if (operator.contains(Constants.PG_NOT)){
+            has_not=true;
+        }
         boolean is_cast = false;
         SQLCondition eachCondition = new SQLCondition();
         if (expr instanceof SQLCastExpr) {
@@ -1790,6 +1793,11 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
 
     public boolean visit(SQLMethodInvokeExpr x) {
 
+        for (String s:SQLParseServer.sqlStrList) {
+            if (s.contains(x.toString()) && s.contains("=") && !s.toLowerCase(Locale.ROOT).contains("when")){
+                has_fun=true;
+            }
+        }
 
         this.functions.add(x);
 

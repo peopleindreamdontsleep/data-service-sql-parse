@@ -36,12 +36,13 @@ public class FunManager implements Manager {
 
     @Override
     public boolean hasType(Object cons) {
+
         List<SQLMethodInvokeExpr> functions = (List<SQLMethodInvokeExpr>) cons;
 
         for (String s:SQLParseServer.sqlStrList) {
             for (SQLMethodInvokeExpr t:functions) {
                 //确保函数不是在case when上
-                if (s.contains(t.toString()) && s.contains("=") && !s.toLowerCase(Locale.ROOT).contains("case")){
+                if (s.contains(t.toString()) && s.contains("=") && !s.toLowerCase(Locale.ROOT).contains("when")){
                     return true;
                 }
             }

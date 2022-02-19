@@ -16,7 +16,6 @@ public class NotManager implements Manager{
     public String getSuggest(Object cons) {
         List<SQLCondition> conditions = (List<SQLCondition>)cons;
         for (SQLCondition eachCon:conditions) {
-
             if (eachCon.getOperator().contains(Constants.PG_NOT)){
                return SQLRules.condition_not.getRuleContent();
             }
@@ -43,7 +42,6 @@ public class NotManager implements Manager{
     public boolean hasType(Object cons) {
         List<SQLCondition> conditions = (List<SQLCondition>)cons;
         for (SQLCondition eachCon:conditions) {
-
             if (eachCon.getOperator().contains(Constants.PG_NOT)){
                 return true;
             }

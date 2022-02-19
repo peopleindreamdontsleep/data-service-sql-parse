@@ -17,12 +17,9 @@ public class LikeManager implements Manager {
         List<SQLCondition> conditions = (List<SQLCondition>)cons;
         for (SQLCondition eachCon:conditions) {
             if (eachCon.getOperator().contains(Constants.PG_LIKE)){
-                List<Object> values = eachCon.getValues();
-                if (values.toString().contains(Constants.PG_PER)){
-                    return SQLRules.condition_like_true.getRuleContent();
-                }else{
-                    return SQLRules.condition_like_false.getRuleContent();
-                }
+
+                return SQLRules.condition_like.getRuleContent();
+
             }
         }
         return "";
