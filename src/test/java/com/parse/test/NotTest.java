@@ -18,7 +18,7 @@ public class NotTest {
         List<SQLCondition> selfConditions = pgSchemaStatVisitor.getSelfConditions();
 
         Manager notSuggest = new NotManager();
-        if (notSuggest.getType(selfConditions)){
+        if (notSuggest.hasType(selfConditions)){
             System.out.println(notSuggest.getSuggest(selfConditions));
         }
     }

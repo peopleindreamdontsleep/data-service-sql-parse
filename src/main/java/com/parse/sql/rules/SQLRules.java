@@ -4,7 +4,7 @@ public enum SQLRules {
 
     function_cast("fun001", "使用cast将str转成int有风险，请确保str内容不为空或null或无脏数据","cast(name bigint)>10 or name::20<8"),
 
-    function_field("fun002", "在字段上使用函数，该字段将不会走索引，请谨慎使用","cast(name bigint)>10 or name::20<8"),
+    function_field("fun002", "在字段上使用函数，该字段将不会走索引，请谨慎使用","to_char(n_time, 'yyyy-MM-dd')>'2021-01-10'"),
 
     condition_like_false("con001", "不加通配符，like和等号等同","name like 'apple'"),
 

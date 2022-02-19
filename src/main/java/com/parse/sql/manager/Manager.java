@@ -5,13 +5,15 @@ import com.parse.sql.repository.SQLCondition;
 import java.util.List;
 
 public interface Manager {
-    String getSuggest(List<SQLCondition> cons);
 
-    String getOperate(List<SQLCondition> cons);
+    String getSuggest(Object cons);
 
-    String getLeft(List<SQLCondition> cons);
+    String getOperate(Object cons);
 
-    String getRight(List<SQLCondition> cons);
+    String getLeft(Object cons);
 
-    boolean getType(List<SQLCondition> cons);
+    String getRight(Object cons);
+
+    boolean hasType(Object cons);
+
 }

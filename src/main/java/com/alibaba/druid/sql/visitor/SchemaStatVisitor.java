@@ -677,11 +677,10 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
                 }
                 if(is_cast){
                     eachCondition.setColumn(Constants.PG_CAST+" ("+column.toString()+Constants.PG_AS+eachCondition.getDataType()+")");
-                    eachCondition.setOperator(operator);
                 }else{
                     eachCondition.setColumn(column.toString());
-                    eachCondition.setOperator(operator);
                 }
+                eachCondition.setOperator(operator);
                 condition = item;
                 break;
             }
@@ -1790,6 +1789,7 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
     }
 
     public boolean visit(SQLMethodInvokeExpr x) {
+
 
         this.functions.add(x);
 
